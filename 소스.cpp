@@ -1,32 +1,21 @@
 #include<iostream>
 using namespace std;
 
-int onec, zeroc;
+int dp[1000010];
 
-int fibonacci(int n) {
-	if (n == 0) {
-		zeroc++;
-		return 0;
-
-	}
-	else if (n == 1) {		
-		onec++;
-		return 1;
-	}
-	else {
-		return fibonacci(n - 1) + fibonacci(n - 2);
-	}
+int min(int a, int b){
+	return a < b ? a : b;
 }
 
 int main(){
-	int t;
-	cin >> t;
-	while (t--){
-		int a;
-		cin >> a;
-		fibonacci(a);
-		printf("%d %d\n", zeroc, onec);
-		onec = zeroc = 0;
+	int n;
+	cin >> n;
+	for (int i = 2; i <= n; i++){
+		dp[i] = dp[i - 1] + 1;
+		if (i % 2 == 0)
+			dp[i] = min(dp[i], dp[i / 2] + 1);
+		if (i % 3 == 0)
+			dp[i] = min(dp[i], dp[i / 3] + 1);
 	}
-	return 0;
+	printf("%d", dp[n]);
 }
